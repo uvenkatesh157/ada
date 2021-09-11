@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+
+#include&lt;stdio.h&gt;
+int p[20][20],n;
+int min(int,int);
+int path()
+{
+	int i,j,k;
+	for(k=0;k&lt;n;k++)
+		for(i=0;i&lt;n;i++)
+			for(j=0;j&lt;n;j++)
+				if(i==j)
+					p[i][j]=0;
+				else
+					p[i][j]=min(p[i][j],p[i][k]+p[k][j]);
+}
+int min(int a,int b)
+{
+	if(a&lt;b)
+		return a;
+	else
+		return b;
+}
+void main()
+{
+	int i,j;
+	printf("\n Enter the no of vertices:");
+	scanf("%d",&n);
+	printf("\n Enter the adjacency matrix:");
+	for(i=0;i&lt;n;i++)
+	{
+		for(j=0;j&lt;n;j++)
+		{
+			scanf("%d",&p[i][j]);
+			if(p[i][j]==0 && i!=j)
+				p[i][j]=999;
+		}
+	}
+	path();
+	for(i=0;i&lt;n;i++)
+	{
+		for(j=0;j&lt;n;j++)
+		{
+		printf("%d\t",p[i][j]);
+		}
+		printf("\n");
+	}
+	 for(i=0;i&lt;n;i++)
+	{
+        	for(j=0;j&lt;n;j++)	
+			{
+				if(i!=j)
+					if(p[i][j]==999)
+						printf("(%d,%d) is infinite\n",i+1,j+1);
+					else
+						printf("(%d,%d) is %d\n",i+1,j+1,p[i][j]);
+	}		}
+}
+
+
+    </pre>
+</body>
+
+</html>

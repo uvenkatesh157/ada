@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+        #include&lt;stdio.h&gt;
+        #include&lt;stdlib.h&gt;
+        #define TRUE 1
+        #define FALSE 0
+        int inc[50],w[50],sum,n;
+        int promising(int i,int wt,int total) {
+            return(((wt+total)&gt;=sum)&&((wt==sum)||(wt+w[i+1]&lt;=sum)));
+        }
+        void sumset(int i,int wt,int total) {
+            int j;
+            if(promising(i,wt,total)) {
+                if(wt==sum) {
+                
+                    for (j=0;j&lt;=i;j++)
+                        if(inc[j])
+                         printf("%d\t",w[j]);
+                         printf("\n");
+                
+                } else {
+                    inc[i+1]=TRUE;
+                    sumset(i+1,wt+w[i+1],total-w[i+1]);
+                    inc[i+1]=FALSE;
+                    sumset(i+1,wt,total-w[i+1]);
+                }
+            }
+        }
+        void main() {
+            int i,j,n,temp,total=0,min;
+            printf("\nEnter how many numbers : ");
+            scanf("%d",&n);
+            printf("\nEnter %d numbers to the set : ",n);
+            for (i=0;i&lt;n;i++) {
+                scanf("%d",&w[i]);
+                total+=w[i];
+            }
+            printf("\nInput the sum value to create sub set : ");
+            scanf("%d",&sum);
+            if((total&lt;sum))
+              printf("\nSubset construction is not possible");
+               else {
+                for (i=0;i&lt;n;i++)
+                   inc[i]=0;
+                printf("\nThe solution using backtracking is:\n");
+                sumset(-1,0,total);
+                }
+            
+        }
+        
+        
+    </pre>
+</body>
+
+</html>

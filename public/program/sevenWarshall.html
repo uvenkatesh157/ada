@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+        #include&lt;stdio.h&gt;
+        #include&lt;stdlib.h&gt;
+        int n,p[10][10];
+        void path()
+        {
+            int i,j,k;
+            for(k=0;k&lt;n;k++)
+               for(i=0;i&lt;n;i++)
+                        for(j=0;j&lt;n;j++)
+                    if(p[i][j]==1 || p[i][k]==1 && p[k][j]==1)
+                        p[i][j]=1;
+        
+        }
+        void main()
+        {
+            int i,j;
+            printf("\nEnter number of nodes : ");
+            scanf("%d",&n);
+            printf("\nEnter adjacency matrix : ");
+            for(i=0;i&lt;n;i++)
+                for(j=0;j&lt;n;j++){
+                    scanf("%d",&p[i][j]);
+                    if(p[i][j]&lt;0 || p[i][j]&gt;1){
+                        printf("Invalid Input");
+                        exit(0);
+                        }
+                    }	
+            path();
+            printf("\nTransitive Closure \n");
+            for(i=0;i&lt;n;i++)
+            {
+                for(j=0;j&lt;n;j++)
+                {
+                    printf("%d ",p[i][j]);
+                }
+                printf("\n");
+            }
+        
+        }
+        
+    </pre>
+</body>
+
+</html>

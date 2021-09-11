@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+
+<body>
+	<pre>
+		#include&lt;stdio.h&gt;
+#include&lt;sys/time.h&gt;
+#include&lt;stdlib.h&gt;
+#include&lt;string.h&gt;
+char str[1000],pat[10];
+
+int pattern_match()
+{
+	int n,m,i,j;
+	n=strlen(str);
+	m=strlen(pat);
+	for(i=0;i&lt;=(n-m);i++)
+	{
+		j=0;
+		while(j&lt;m && str[i+j]==pat[j])
+		{
+			j++;
+			if(j==m)
+				return i;
+		}
+	}
+	return -1;
+}
+
+void main()
+{
+	int l[10][10];
+	int n,pos,k,i;
+	float t1,t2;
+	struct timeval begin,end;
+	FILE *f;
+	f=fopen("str.txt","w");
+	char c;
+	int iteration_no;
+	printf("\nENTER THE NUMBER OF ITERATION :");
+	scanf("%d",&iteration_no);
+	scanf("%c",&c);
+	for(k=0;k&lt;iteration_no;k++)
+	{
+		l[k][0]=k;
+		printf("\nENTER STRING : ");
+		gets(str);
+		n=strlen(str);
+		l[k][1]=n;
+		printf("\n ENTER PATTERN - BEST CASE : ");
+		gets(pat);
+		
+		gettimeofday(&begin,NULL);
+		pos=pattern_match();
+		gettimeofday(&end,NULL);
+		printf("\n FOUND AT POSITION %d",pos+1);
+		t1=end.tv_usec-begin.tv_usec;
+		l[k][2]=t1;
+		printf("\n ENTER PATTERN - WORST CASE : ");
+                gets(pat);
+		
+                gettimeofday(&begin,NULL);
+                pos=pattern_match();
+                gettimeofday(&end,NULL);
+		if(pos!=-1)
+                	printf("\n FOUND AT POSITION %d",pos+1);
+		else
+			printf("\n NOT FOUND ");
+                t2=end.tv_usec-begin.tv_usec;
+		l[k][3]=t2;
+		printf("\n TIMETAKEN BY  %d LENGTH IS  %1.2f AND %1.2f",n,t1,t2);
+		fprintf(f,"%d \t %1.2f \t %1.2f \n",n,t1,t2);
+	}
+	fclose(f);
+	printf("\n\nNO. \t LENGTH \t TIMETAKEN-BEST CASE \t TIMETAKEN-WORST CASE\n"); 
+                for(k=0;k&lt;iteration_no;k++)
+                {
+                        for(i=0;i&lt;4;i++)
+                                printf("%d \t\t",l[k][i]);
+                        printf("\n");
+                }
+
+}
+
+    </pre>
+</body>
+
+</html>

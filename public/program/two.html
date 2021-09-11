@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <pre>
+        #include&lt;stdio.h&gt;
+#include&lt;sys/time.h&gt;
+int a[5000];
+int partition(int l,int h)
+{
+	int temp,i,j,pivot;
+	pivot = a[l];
+	i = l;
+	j = h;
+	while(i&lt;=j)
+	{
+		while(a[i]&lt;=pivot && i&lt;=h)
+			i++;
+		while(a[j]&gt;pivot && j&gt;=l)
+			j--;
+		if(i&lt;j)
+		{
+			temp=a[i];
+			a[i]=a[j];
+			a[j]=temp;
+		}
+		else
+		{
+			temp=a[l];
+			a[l]=a[j];
+			a[j]=temp;
+		}
+	}
+	return j;
+}
+void quicksort(int l,int h)
+{
+	if(l&lt;h)
+	{
+		int j = partition(l,h);
+		quicksort(l,j-1);
+		quicksort(j+1,h);
+	}
+}
+void main()
+{
+	int l[500][500];
+	int p,q,m,n;
+	FILE *f;
+	float t;
+	struct timeval begin,end;
+	f=fopen("quick.txt","w");
+	printf("Enter number of iterations : ");
+	scanf("%d",&m);
+	for(q=0;q&lt;m;q++)
+	{
+		l[q][0]=q+1;
+		printf("Enter the number of elements : ");
+		scanf("%d",&n);
+		l[q][1]=n;
+		for(p=0;p&lt;n;p++)
+		{
+			a[p] = rand()%100;
+			printf("%d,",a[p]);
+		}
+		gettimeofday(&begin,NULL);
+		quicksort(0,n-1);
+		gettimeofday(&end,NULL);
+		printf("\nAfter sorting :");
+		for(p=0;p&lt;n;p++)
+		{
+			printf("%d,",a[p]);
+		}
+		t = end.tv_usec - begin.tv_usec;
+		printf("\nTime taken is %1.2f\n",t);
+		l[q][2]=t;
+		fprintf(f,"%d \t %1.2f \n",n,t);
+	}
+		fclose(f);
+		printf("\n\nNO \t no. of inputs \t time taken\n"); 
+		for(p=0;p&lt;m;p++)
+		{
+			for(q=0;q&lt;3;q++)
+				printf("%d \t\t",l[p][q]);
+			printf("\n");
+		}
+}
+
+    </pre>
+</body>
+
+</html>
